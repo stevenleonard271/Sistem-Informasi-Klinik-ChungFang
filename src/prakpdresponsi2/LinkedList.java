@@ -13,6 +13,7 @@ public class LinkedList {
 
     LinkedListNode head;
     LinkedListNode tail;
+    
 
     LinkedList() {
         this.head = null;
@@ -22,7 +23,7 @@ public class LinkedList {
     void print() {
         LinkedListNode current = this.head;
         while (current != null) {
-            System.out.println(current.data + " ");
+            System.out.println(current.data+"." +" "+current.Dokter );
             current = current.next;
         }
         System.out.println("");

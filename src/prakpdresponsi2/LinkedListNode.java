@@ -14,11 +14,13 @@ public class LinkedListNode {
     LinkedListNode next;
     LinkedListNode prev;
     int data;
+    String Dokter;
 
-    LinkedListNode(int new_data) {
+    LinkedListNode(int new_data, String data_dokter) {
         this.data = new_data;
         this.prev = null;
         this.next = null;
+        this.Dokter = data_dokter;
     }
 
     void set_prev(LinkedListNode other) {

@@ -16,17 +16,15 @@ public class Interface {
     static Scanner sc = new Scanner(System.in);
     static LinkedList a = new LinkedList();
     static int pilihan, angka;
+    static String dokter;
 
     public static void main(String[] args) {
         System.out.println("Selamat datang, pelanggan yang terhormat di Klinik Chung Fang ");
-        pilihdokter();
-        System.out.println("Terima kasih, Silahkan anda mengambil nomor antrian dahulu");
         menu();
     }
 
     static void pilihdokter() {
         int pilih;
-        System.out.println("Silahkan anda memilih dokter terlebih dahulu");
         System.out.println("1.dr.Sung Hay Sung --> Dokter Penyakit Dalam ");
         System.out.println("2.dr.Hung Weng Hung --> Dokter Penyakit Dalam");
         System.out.println("3.dr.Hiung Hai Sang --> Dokter Penyakit Luar");
@@ -36,26 +34,31 @@ public class Interface {
         pilih = sc.nextInt();
         switch (pilih) {
             case 1:
+                dokter="dr.Sung Hay Sung";
                 break;
             case 2:
+                dokter="dr.Hung Weng Hung";
                 break;
             case 3:
+                dokter="dr.Hiung Hai Sang";
                 break;
             case 4:
+                dokter="dr.Fei Hung";
                 break;
             case 5:
-                // simpan data dokter yang dipilih
+                dokter="dr.Tenma Gressy";
                 break;
         }
     }
 
     static void menu() {
         int pilih;
-        System.out.println("--Menu--");
+        System.out.println("-------------MENU--------------");
         System.out.println("1. Ambil Nomor Antrian");
         System.out.println("2. Panggilan");
         System.out.println("3. Menampilkan Nomor Antrian");
         System.out.println("4. Exit");
+        System.out.println("-------------------------------");
         System.out.print("Pilih : ");
         pilih = sc.nextInt();
         switch (pilih) {
@@ -81,11 +84,11 @@ public class Interface {
                 System.out.println("Berikut nomor yang sudah diambil : ");
                 a.print();
             } else {
-                System.out.println("Terima kasih sudah mengambil nomor antrian. Mohon menunggu");
+                System.out.println("Terima kasih sudah mengambil nomor antrian. Silahkan memilih dokter terlebih dahulu");
                 pilihdokter();
             }
         } while (a.find_node_by_data(angka) != null);
-        a.push(new LinkedListNode(angka));
+        a.push(new LinkedListNode(angka,dokter));
         menu();
     }
 
