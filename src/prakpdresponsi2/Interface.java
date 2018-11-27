@@ -14,9 +14,11 @@ import java.util.Scanner;
 public class Interface {
 
     static Scanner sc = new Scanner(System.in);
+    static Scanner b = new Scanner (System.in);
     static LinkedList a = new LinkedList();
     static int pilihan, angka;
     static String dokter;
+    static String name, age, gender, disease;
 
     public static void main(String[] args) {
         System.out.println("Selamat datang, pelanggan yang terhormat di Klinik Chung Fang ");
@@ -34,19 +36,19 @@ public class Interface {
         pilih = sc.nextInt();
         switch (pilih) {
             case 1:
-                dokter="dr.Sung Hay Sung";
+                dokter = "dr.Sung Hay Sung";
                 break;
             case 2:
-                dokter="dr.Hung Weng Hung";
+                dokter = "dr.Hung Weng Hung";
                 break;
             case 3:
-                dokter="dr.Hiung Hai Sang";
+                dokter = "dr.Hiung Hai Sang";
                 break;
             case 4:
-                dokter="dr.Fei Hung";
+                dokter = "dr.Fei Hung";
                 break;
             case 5:
-                dokter="dr.Tenma Gressy";
+                dokter = "dr.Tenma Gressy";
                 break;
         }
     }
@@ -65,6 +67,7 @@ public class Interface {
             case 1:
                 input();
             case 2:
+                identity();
                 pop();
             case 3:
                 print();
@@ -88,7 +91,7 @@ public class Interface {
                 pilihdokter();
             }
         } while (a.find_node_by_data(angka) != null);
-        a.push(new LinkedListNode(angka,dokter));
+        a.push(new LinkedListNode(angka, dokter));
         menu();
     }
 
@@ -99,6 +102,18 @@ public class Interface {
     static void print() {
         a.print();
         menu();
+    }
+
+    static void identity() {
+        System.out.println("Masukkan identitas anda ");
+        System.out.print("Nama :");
+        name = b.next();
+        System.out.println("Jenis Kelamin(L/P) :");
+        gender = b.next();
+        System.out.println("Umur");
+        age = b.next();
+        System.out.println("Penyakit :");
+        disease = b.next();
     }
 
     static void exit() {
