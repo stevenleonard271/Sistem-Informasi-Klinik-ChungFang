@@ -14,11 +14,12 @@ import java.util.Scanner;
 public class Interface {
 
     static Scanner sc = new Scanner(System.in);
-    static Scanner b = new Scanner (System.in);
+    static Scanner b = new Scanner(System.in);
     static LinkedList a = new LinkedList();
-    static int pilihan, angka;
+    static int pilihan, angka, age;
     static String dokter;
-    static String name, age, gender, disease;
+    static String disease;
+    static char gender, name;
 
     public static void main(String[] args) {
         System.out.println("Selamat datang, pelanggan yang terhormat di Klinik Chung Fang ");
@@ -107,13 +108,27 @@ public class Interface {
     static void identity() {
         System.out.println("Masukkan identitas anda ");
         System.out.print("Nama :");
-        name = b.next();
+        name = b.next().charAt(0);
+        System.out.print("Umur :");
+        age = b.nextInt();
         System.out.println("Jenis Kelamin(L/P) :");
-        gender = b.next();
-        System.out.println("Umur");
-        age = b.next();
-        System.out.println("Penyakit :");
+        System.out.println("1. Pria");
+        System.out.println("2. Wanita");
+        System.out.print("Pilih :");
+        gender = b.next().charAt(0);
+        switch (pilihan) {
+            case 1:
+                gender = 'L';
+                break;
+            case 2:
+                gender = 'P';
+                break;
+        }
+        System.out.print("Penyakit :");
         disease = b.next();
+        System.out.println("Terima kasih sudah berobat di klinik kami...Get well soon");
+        System.out.println("");
+        System.out.println("Antrian selanjutnya : ");
     }
 
     static void exit() {
