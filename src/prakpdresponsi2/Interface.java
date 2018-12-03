@@ -20,6 +20,7 @@ public class Interface {
     static String dokter;
     static String disease;
     static char gender, name;
+    static int queuelist = 0;
 
     public static void main(String[] args) {
         System.out.println("Selamat datang, pelanggan yang terhormat di Klinik Chung Fang ");
@@ -66,15 +67,33 @@ public class Interface {
         pilih = sc.nextInt();
         switch (pilih) {
             case 1:
-                input();
+                if (queuelist < 5) {
+                    input();
+                } else {
+                    System.out.println("Maaf, batasan antrian sudah penuh.");
+                    menu();
+                }
+                break;
             case 2:
-                identity();
-                pop();
+
+                if (queuelist == 0) {
+                    System.out.println("Tidak ada antrian");                   
+                    menu();
+                } else {
+                    identity();
+                    pop();
+                    menu();
+                }
+                break;
             case 3:
                 print();
+                break;
             case 4:
                 exit();
-
+                break;
+            default:
+                System.out.println("Inputan salah, ulang lagi");
+                menu();
         }
     }
 
@@ -88,6 +107,7 @@ public class Interface {
                 System.out.println("Berikut nomor yang sudah diambil : ");
                 a.print();
             } else {
+                queuelist++;
                 System.out.println("Terima kasih sudah mengambil nomor antrian. Silahkan memilih dokter terlebih dahulu");
                 pilihdokter();
             }
@@ -98,6 +118,7 @@ public class Interface {
 
     static void pop() {
         a.qpop();
+        queuelist--;
     }
 
     static void print() {
