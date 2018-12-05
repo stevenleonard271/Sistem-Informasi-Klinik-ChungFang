@@ -17,9 +17,8 @@ public class Interface {
     static Scanner b = new Scanner(System.in);
     static LinkedList a = new LinkedList();
     static int pilihan, angka, age;
-    static String dokter;
-    static String disease;
-    static char gender, name;
+    static String dokter, disease, name;
+    static char gender;
     static int queuelist = 0;
 
     public static void main(String[] args) {
@@ -52,6 +51,8 @@ public class Interface {
             case 5:
                 dokter = "dr.Tenma Gressy";
                 break;
+            default:
+                System.out.println("Maaf inputan Anda salah, Mohon masukkan angka 1-5 ");
         }
     }
 
@@ -77,11 +78,10 @@ public class Interface {
             case 2:
 
                 if (queuelist == 0) {
-                    System.out.println("Tidak ada antrian");                   
+                    System.out.println("Tidak ada antrian");
                     menu();
                 } else {
                     identity();
-                    pop();
                     menu();
                 }
                 break;
@@ -98,7 +98,6 @@ public class Interface {
     }
 
     static void input() {
-
         do {
             System.out.print("Daftar nomor antrian : ");
             angka = sc.nextInt();
@@ -128,14 +127,16 @@ public class Interface {
 
     static void identity() {
         System.out.println("Masukkan identitas anda ");
-        System.out.print("Nama :");
-        name = b.next().charAt(0);
-        System.out.print("Umur :");
+        System.out.print("Nama              :");
+        name = b.nextLine();
+        if (b.hasNextLine()){
+            b.nextLine();
+        }
+        System.out.print("Umur              :");
         age = b.nextInt();
-        System.out.println("Jenis Kelamin(L/P) :");
-        System.out.println("1. Pria");
-        System.out.println("2. Wanita");
-        System.out.print("Pilih :");
+        System.out.println("Jenis Kelamin(L/P):1.Pria");
+        System.out.println("                   2.Wanita");
+        System.out.print("Pilih             :");
         gender = b.next().charAt(0);
         switch (pilihan) {
             case 1:
@@ -145,11 +146,15 @@ public class Interface {
                 gender = 'P';
                 break;
         }
-        System.out.print("Penyakit :");
+        System.out.print("Penyakit          :");
         disease = b.next();
         System.out.println("Terima kasih sudah berobat di klinik kami...Get well soon");
         System.out.println("");
+        pop();
         System.out.println("Antrian selanjutnya : ");
+        print();   
+      
+
     }
 
     static void exit() {
