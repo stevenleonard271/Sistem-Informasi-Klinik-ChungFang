@@ -6,6 +6,10 @@
 package prakpdresponsi2;
 
 import java.util.Scanner;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
 
 /**
  *
@@ -17,12 +21,20 @@ public class Interface {
     static Scanner b = new Scanner(System.in);
     static LinkedList a = new LinkedList();
     static int pilihan, angka, age;
-    static String dokter, disease, name;
+    static String dokter, disease, name, sql;
     static char gender;
     static int queuelist = 0;
+    static Statement stmt;
 
     public static void main(String[] args) {
         System.out.println("Selamat datang, pelanggan yang terhormat di Klinik Chung Fang ");
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/klinik", "root", "");
+            stmt = conn.createStatement();
+        } catch (Exception e) {
+            System.out.println("error!!");
+        }
         menu();
     }
 
@@ -81,6 +93,7 @@ public class Interface {
                     System.out.println("Tidak ada antrian");
                     menu();
                 } else {
+                    b.nextLine();
                     identity();
                     menu();
                 }
@@ -129,9 +142,6 @@ public class Interface {
         System.out.println("Masukkan identitas anda ");
         System.out.print("Nama              :");
         name = b.nextLine();
-        if (b.hasNextLine()){
-            b.nextLine();
-        }
         System.out.print("Umur              :");
         age = b.nextInt();
         System.out.println("Jenis Kelamin(L/P):1.Pria");
@@ -150,11 +160,18 @@ public class Interface {
         disease = b.next();
         System.out.println("Terima kasih sudah berobat di klinik kami...Get well soon");
         System.out.println("");
+
+        //query simpan
+        sql = "INSERT INTO data (nama, umur, JK, Penyakit) VALUES ('" + name + "', '" + age + "','" + gender + "', '" + disease + "')";
+        System.out.println(sql);
+        try{
+            stmt.executeUpdate(sql);
+        } catch (Exception e){
+            System.out.println(e.getMessage());
+        }
         pop();
         System.out.println("Antrian selanjutnya : ");
-        print();   
-      
-
+        print();
     }
 
     static void exit() {
