@@ -30,6 +30,18 @@ public class Interface {
         System.out.println("Selamat datang, pelanggan yang terhormat di Klinik Chung Fang ");
         try {
             Class.forName("com.mysql.jdbc.Driver");
+            /* Run this Sql First
+                Create database klinik;
+  
+                create table klinik.data(
+                id int NOT NULL AUTO_INCREMENT,
+                name varchar(200) NOT NULL,
+                umur int NOT NULL,
+                JK char NOT NULL,
+                Penyakit varchar(25) NOT NULL,
+                PRIMARY KEY(id)
+                );*/
+            
             Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/klinik", "root", "");
             stmt = conn.createStatement();
         } catch (Exception e) {
