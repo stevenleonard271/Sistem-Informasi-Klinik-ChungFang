@@ -170,7 +170,7 @@ public class Interface {
         }
         System.out.print("Penyakit          :");
         disease = b.next();
-        System.out.println("Terima kasih sudah berobat di klinik kami...Get well soon");
+        System.out.println("Terima kasih, silahkan menuju " + dokter+ "...Get well soon");
         System.out.println("");
 
         //query simpan
