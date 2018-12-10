@@ -19,11 +19,12 @@ public class Interface {
 
     static Scanner sc = new Scanner(System.in);
     static Scanner b = new Scanner(System.in);
+    static Scanner pas = new Scanner(System.in);
     static LinkedList a = new LinkedList();
     static int pilihan, angka, age;
     static String dokter, disease, name, sql;
     static char gender;
-    static int queuelist = 0;
+    static int queuelist = 0, numbering = 1, id;
     static Statement stmt;
 
     public static void main(String[] args) {
@@ -35,13 +36,13 @@ public class Interface {
   
                 create table klinik.data(
                 id int NOT NULL AUTO_INCREMENT,
-                name varchar(200) NOT NULL,
+                nama varchar(200) NOT NULL,
                 umur int NOT NULL,
                 JK char NOT NULL,
                 Penyakit varchar(25) NOT NULL,
                 PRIMARY KEY(id)
                 );*/
-            
+
             Connection conn = DriverManager.getConnection("jdbc:mysql://localhost/klinik", "root", "");
             stmt = conn.createStatement();
         } catch (Exception e) {
@@ -86,7 +87,8 @@ public class Interface {
         System.out.println("1. Ambil Nomor Antrian");
         System.out.println("2. Panggilan");
         System.out.println("3. Menampilkan Nomor Antrian");
-        System.out.println("4. Exit");
+        System.out.println("4. Data Pasien");
+        System.out.println("5. Exit");
         System.out.println("-------------------------------");
         System.out.print("Pilih : ");
         pilih = sc.nextInt();
@@ -100,7 +102,6 @@ public class Interface {
                 }
                 break;
             case 2:
-
                 if (queuelist == 0) {
                     System.out.println("Tidak ada antrian");
                     menu();
@@ -114,6 +115,8 @@ public class Interface {
                 print();
                 break;
             case 4:
+                patient();
+            case 5:
                 exit();
                 break;
             default:
@@ -123,20 +126,11 @@ public class Interface {
     }
 
     static void input() {
-        do {
-            System.out.print("Daftar nomor antrian : ");
-            angka = sc.nextInt();
-            if (a.find_node_by_data(angka) != null) {
-                System.out.println("Angka antrian sudah diambil. Silahkan ganti nomor yang lain");
-                System.out.println("Berikut nomor yang sudah diambil : ");
-                a.print();
-            } else {
-                queuelist++;
-                System.out.println("Terima kasih sudah mengambil nomor antrian. Silahkan memilih dokter terlebih dahulu");
-                pilihdokter();
-            }
-        } while (a.find_node_by_data(angka) != null);
-        a.push(new LinkedListNode(angka, dokter));
+        queuelist++;
+        System.out.println("Terima kasih sudah mengambil nomor antrian. Silahkan memilih dokter terlebih dahulu");
+        pilihdokter();
+        a.push(new LinkedListNode(numbering, dokter));
+        numbering++;
         menu();
     }
 
@@ -156,34 +150,75 @@ public class Interface {
         name = b.nextLine();
         System.out.print("Umur              :");
         age = b.nextInt();
-        System.out.println("Jenis Kelamin(L/P):1.Pria");
-        System.out.println("                   2.Wanita");
-        System.out.print("Pilih             :");
+        System.out.print("Jenis Kelamin(L/P):");
         gender = b.next().charAt(0);
-        switch (pilihan) {
-            case 1:
-                gender = 'L';
-                break;
-            case 2:
-                gender = 'P';
-                break;
-        }
         System.out.print("Penyakit          :");
         disease = b.next();
-        System.out.println("Terima kasih, silahkan menuju " + dokter+ "...Get well soon");
+        System.out.println("Terima kasih, silahkan menuju " + dokter + "...Get well soon");
         System.out.println("");
 
         //query simpan
         sql = "INSERT INTO data (nama, umur, JK, Penyakit) VALUES ('" + name + "', '" + age + "','" + gender + "', '" + disease + "')";
         System.out.println(sql);
-        try{
+        try {
             stmt.executeUpdate(sql);
-        } catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e.getMessage());
         }
         pop();
         System.out.println("Antrian selanjutnya : ");
         print();
+    }
+
+    static void patient() {
+        int option;
+        int identitas;
+        System.out.println("1.Menampilkan semua data pasien");
+        System.out.println("2.Ralat data Pasien");
+        System.out.println("3.Menghapus beberapa data pasien");
+        System.out.print("Pilihan : ");
+        option = pas.nextInt();
+        if (option == 1) {
+            sql = "SELECT * FROM data";
+            //System.out.println(sql);
+            try {
+                ResultSet rs = stmt.executeQuery(sql);
+
+                while (rs.next()) {
+                    System.out.println(rs.getInt("id") + "\t" + rs.getString("nama") + "\t" + rs.getInt("umur") + "\t" + rs.getString("JK") + "\t" + rs.getString("Penyakit"));
+                }
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+            menu();
+        } else if (option == 2) {
+            System.out.println("Masukkan id yang hendak diupdate");
+            id = pas.nextInt();
+            System.out.println("Masukkan nama yang hendak diupdate");
+            name = pas.nextLine();
+            sql = "UPDATE data SET nama = '" + name + "' where id='" + id + "'";
+            System.out.println(sql);
+            try {
+                stmt.executeUpdate(sql);
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+            menu();
+        } else if (option == 3) {
+            System.out.println("Masukkan id yang hendak dihapus");
+            id = pas.nextInt();
+            sql = "DELETE FROM data where id = '" + id + "'";
+            System.out.println(sql);
+            try {
+                stmt.executeUpdate(sql);
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+            menu();
+        } else {
+            menu();
+        }
+
     }
 
     static void exit() {
